@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace SQL.Databases
 {
@@ -11,6 +12,10 @@ namespace SQL.Databases
         static void Main(string[] args)
         {
             var dbNames = GetDatabaseNames();
+
+            var systemDbs = new[] {"master", "tempdb", "model", "msdb"};
+            dbNames.RemoveAll(s => systemDbs.Contains(s));
+
             dbNames.ForEach(Console.WriteLine);
 
             Console.ReadLine();
